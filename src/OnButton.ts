@@ -1,11 +1,11 @@
 import 'phaser'
-import { SceneEditor } from './SceneEditor';
-import { SceneEditorPlugin } from './SceneEditorPlugin';
+import { SceneEditor } from './scene_editor/SceneEditor';
+import { SceneEditorPlugin } from './scene_editor/SceneEditorPlugin';
 
-export class LevelEditorTools {
-    workingScene: Phaser.Scene
-    game: Phaser.Game
-    public constructor() {
+export class OnButton {
+    static workingScene: Phaser.Scene
+    static game: Phaser.Game
+    public static flipOn() {
         const config = {
             type: Phaser.AUTO,
             backgroundColor: '#125555',
@@ -26,9 +26,6 @@ export class LevelEditorTools {
             scene: SceneEditor
         };
 
-        this.game = new Phaser.Game(config);
-    }
-    public accessScene () {
-        console.log("Scene "+this.game.scene.scenes);
+        OnButton.game = new Phaser.Game(config);
     }
 }

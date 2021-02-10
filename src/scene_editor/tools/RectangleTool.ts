@@ -1,8 +1,8 @@
 import 'phaser'
 import { Scene } from 'phaser';
-import { PositionUtils, OriginPosition} from './PositionUtils'
-import { SceneEditorPlugin } from './SceneEditorPlugin'
-import { SceneEditorTool, SceneEditorToolTypes } from './SceneEditorTool'
+import { PositionUtils, OriginPosition} from '../../display/PositionUtils'
+import { SceneEditorPlugin } from '../SceneEditorPlugin'
+import { SceneEditorTool, SceneEditorToolTypes } from '../SceneEditorTool'
 
 export class RectangleTool extends SceneEditorTool {
     drawing: boolean;

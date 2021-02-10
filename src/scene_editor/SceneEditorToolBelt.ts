@@ -1,4 +1,4 @@
-import { RectangleTool } from "./RectangleTool";
+import { RectangleTool } from "./tools/RectangleTool";
 import { SceneEditorPlugin } from "./SceneEditorPlugin";
 import { SceneEditorTool, SceneEditorToolTypes } from "./SceneEditorTool";
 

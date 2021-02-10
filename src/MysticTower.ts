@@ -1,5 +1,3 @@
 import 'phaser';
-import { LevelEditorTools } from './LevelEditorTools';
-
-const levelEditor: LevelEditorTools = new LevelEditorTools();
-levelEditor.accessScene();
+import { OnButton } from './OnButton';
+OnButton.flipOn();

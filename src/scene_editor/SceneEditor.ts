@@ -1,27 +1,28 @@
 import 'phaser'
-import {PositionUtils, OriginPosition} from './PositionUtils'
-export class StartLevel extends Phaser.Scene { 
+import {SceneEditorPlugin} from './SceneEditorPlugin'
+export class SceneEditor extends Phaser.Scene { 
+    
     player: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
     stars: Phaser.Physics.Arcade.Group;
     platforms: Phaser.Physics.Arcade.StaticGroup;
     cursors: Phaser.Types.Input.Keyboard.CursorKeys;
     movingPlatform: Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
-    text: Phaser.GameObjects.Text
-    clickDownPos: [integer, integer]
-    
-    constructor(config: string | Phaser.Types.Scenes.SettingsConfig){
+    editor: SceneEditorPlugin;
+    public constructor(sceneFileLocation: string, config: string | Phaser.Types.Scenes.SettingsConfig) {
         super(config);
     }
-    preload ()
-    {
+    //TODO: remove all scene creation and updating from this class and have the SceneEditorPlugin do it
+    preload () {
+        this.editor = this.plugins.get('SceneEditorPlugin') as SceneEditorPlugin; 
+        this.editor.preload(this); 
         this.load.setBaseURL('http://labs.phaser.io');
         this.load.image('sky', 'src/games/firstgame/assets/sky.png');
         this.load.image('ground', 'src/games/firstgame/assets/platform.png');
         this.load.image('star', 'src/games/firstgame/assets/star.png');
         this.load.spritesheet('dude', 'src/games/firstgame/assets/dude.png', { frameWidth: 32, frameHeight: 48 });
     }
-    create ()
-    {
+    create () {
+        this.editor.create(this); 
         this.add.image(400, 300, 'sky');
 
         this.platforms = this.physics.add.staticGroup();
@@ -84,25 +85,9 @@ export class StartLevel extends Phaser.Scene {
         this.physics.add.collider(this.stars, this.movingPlatform);
 
         this.physics.add.overlap(this.player, this.stars, this.collectStar, null, this);
-        this.text = this.add.text(250, 16, '', null);
-        this.input.on('pointerdown', function (pointer) {
-            this.add.image(pointer.x, pointer.y, 'star', Phaser.Math.Between(0, 5));
-            this.clickDownPos = [pointer.x, pointer.y];
-        }, this);
-        
-        this.input.on('pointerup', function (pointer) {
-            this.add.image(pointer.x, pointer.y, 'star', Phaser.Math.Between(0, 5));
-            let width = pointer.x - this.clickDownPos[0];
-            let height = pointer.y - this.clickDownPos[1];
-            let drawPoint: [number, number] =
-                [width<0 ? this.clickDownPos[0] : pointer.x, height<0 ? this.clickDownPos[1] : pointer.y];
-            width = Math.abs(width);
-            height = Math.abs(height);
-            let topLeft = PositionUtils.positionOfTopLeft(drawPoint, width, height, OriginPosition.MidCenter)
-            this.add.rectangle(topLeft[0], topLeft[1], width, height,  0x005500);
-        }, this);
     }
     update () {
+        this.editor.update(this); 
         if (this.cursors.left.isDown)
         {
             this.player.setVelocityX(-160);
@@ -135,14 +120,11 @@ export class StartLevel extends Phaser.Scene {
         {
             this.movingPlatform.setVelocityX(50);
         }
-        let mouse = this.game.input.activePointer
-        this.text.text = "x: " + mouse.x + " y: " + mouse.y
     }
     collectStar (player, star)
     {
         star.disableBody(true, true);
     }
-
 }
 
 
