@@ -1,7 +1,7 @@
 class Greeter {
     element: HTMLElement;
     span: HTMLElement;
-    timerToken: number;
+    timerToken: NodeJS.Timeout;
 
     constructor(el: HTMLElement) {
         this.element = el

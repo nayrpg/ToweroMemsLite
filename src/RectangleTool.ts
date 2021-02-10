@@ -1,0 +1,38 @@
+import 'phaser'
+import { Scene } from 'phaser';
+import { PositionUtils, OriginPosition} from './PositionUtils'
+import { SceneEditorPlugin } from './SceneEditorPlugin'
+import { SceneEditorTool, SceneEditorToolTypes } from './SceneEditorTool'
+
+export class RectangleTool extends SceneEditorTool {
+    drawing: boolean;
+    intermediateRect: Phaser.GameObjects.Image;
+    public constructor () {
+        super();
+        this.type = SceneEditorToolTypes.Rectangle;
+        this.drawing = false;
+    }
+    init (editPlug: SceneEditorPlugin) {
+        let scene = editPlug.scene;
+        scene.input.on('pointerdown', function (pointer) {
+            scene.add.image(pointer.x, pointer.y, 'star', Phaser.Math.Between(0, 5));
+            editPlug.clickDownPos = [pointer.x, pointer.y];
+            this.drawing = true;
+        }, scene)
+        scene.input.on('pointerup', function (pointer) {
+            scene.add.image(pointer.x, pointer.y, 'star', Phaser.Math.Between(0, 5));
+            let width = pointer.x - editPlug.clickDownPos[0];
+            let height = pointer.y - editPlug.clickDownPos[1];
+            let drawPoint: [number, number] =
+                [width<0 ? editPlug.clickDownPos[0] : pointer.x, height<0 ? editPlug.clickDownPos[1] : pointer.y];
+            width = Math.abs(width);
+            height = Math.abs(height);
+            let topLeft = PositionUtils.positionOfTopLeft(drawPoint, width, height, OriginPosition.MidCenter)
+            scene.add.rectangle(topLeft[0], topLeft[1], width, height,  0x005500);
+            this.drawing = false
+        }, scene);
+        super.init(editPlug);
+    }
+    update(editPlug: SceneEditorPlugin) {
+    }
+}
