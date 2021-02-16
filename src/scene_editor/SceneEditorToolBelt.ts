@@ -3,7 +3,7 @@ import { SceneEditorPlugin } from "./SceneEditorPlugin";
 import { SceneEditorTool, SceneEditorToolTypes } from "./SceneEditorTool";
 
 export class SceneEditorToolBelt {
-    public static tools:  Array<SceneEditorTool> = Array(Object.keys(SceneEditorToolTypes).length);
+    public static tools:  SceneEditorTool[] = Array(Object.keys(SceneEditorToolTypes).length);
     /** * getTool */
     public static getTool(toolType: SceneEditorToolTypes) : SceneEditorTool{
         if (!this.tools[toolType]) {
@@ -11,7 +11,6 @@ export class SceneEditorToolBelt {
                 case SceneEditorToolTypes.Rectangle:
                     this.tools[toolType] = new RectangleTool();
                     break;
-            
                 default:
                     return null;
             }
@@ -26,7 +25,7 @@ export class SceneEditorToolBelt {
      * handleToolUpdate
      */
     public static handleToolUpdate(editPlug: SceneEditorPlugin) {
-        let tool = editPlug.tool
+        const tool = editPlug.tool
         if (tool) {
             if (!tool.initDone) {
                 tool.init(editPlug);

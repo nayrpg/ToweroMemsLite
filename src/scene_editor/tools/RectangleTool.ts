@@ -13,7 +13,7 @@ export class RectangleTool extends SceneEditorTool {
         this.drawing = false;
     }
     init (editPlug: SceneEditorPlugin) {
-        let scene = editPlug.scene;
+        const scene = editPlug.scene;
         scene.input.on('pointerdown', function (pointer) {
             scene.add.image(pointer.x, pointer.y, 'star', Phaser.Math.Between(0, 5));
             editPlug.clickDownPos = [pointer.x, pointer.y];
@@ -23,16 +23,17 @@ export class RectangleTool extends SceneEditorTool {
             scene.add.image(pointer.x, pointer.y, 'star', Phaser.Math.Between(0, 5));
             let width = pointer.x - editPlug.clickDownPos[0];
             let height = pointer.y - editPlug.clickDownPos[1];
-            let drawPoint: [number, number] =
+            const drawPoint: [number, number] =
                 [width<0 ? editPlug.clickDownPos[0] : pointer.x, height<0 ? editPlug.clickDownPos[1] : pointer.y];
             width = Math.abs(width);
             height = Math.abs(height);
-            let topLeft = PositionUtils.positionOfTopLeft(drawPoint, width, height, OriginPosition.MidCenter)
+            const topLeft = PositionUtils.positionOfTopLeft(drawPoint, width, height, OriginPosition.MidCenter)
             scene.add.rectangle(topLeft[0], topLeft[1], width, height,  0x005500);
             this.drawing = false
         }, scene);
         super.init(editPlug);
     }
     update(editPlug: SceneEditorPlugin) {
+        return;
     }
 }

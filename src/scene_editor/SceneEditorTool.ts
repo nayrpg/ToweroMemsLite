@@ -11,6 +11,8 @@ export class SceneEditorTool {
     }
     public init(editPlug: SceneEditorPlugin) {
         this.initDone = true;
-    } 
-    public update(editPlug: SceneEditorPlugin){} 
+    }
+    public update(editPlug: SceneEditorPlugin){
+        return;
+    }
 }

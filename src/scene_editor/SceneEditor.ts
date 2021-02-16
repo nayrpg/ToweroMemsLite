@@ -1,7 +1,7 @@
 import 'phaser'
 import {SceneEditorPlugin} from './SceneEditorPlugin'
-export class SceneEditor extends Phaser.Scene { 
-    
+export class SceneEditor extends Phaser.Scene {
+
     player: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
     stars: Phaser.Physics.Arcade.Group;
     platforms: Phaser.Physics.Arcade.StaticGroup;
@@ -11,10 +11,10 @@ export class SceneEditor extends Phaser.Scene {
     public constructor(sceneFileLocation: string, config: string | Phaser.Types.Scenes.SettingsConfig) {
         super(config);
     }
-    //TODO: remove all scene creation and updating from this class and have the SceneEditorPlugin do it
+    // TODO: remove all scene creation and updating from this class and have the SceneEditorPlugin do it
     preload () {
-        this.editor = this.plugins.get('SceneEditorPlugin') as SceneEditorPlugin; 
-        this.editor.preload(this); 
+        this.editor = this.plugins.get('SceneEditorPlugin') as SceneEditorPlugin;
+        this.editor.preload(this);
         this.load.setBaseURL('http://labs.phaser.io');
         this.load.image('sky', 'src/games/firstgame/assets/sky.png');
         this.load.image('ground', 'src/games/firstgame/assets/platform.png');
@@ -22,7 +22,7 @@ export class SceneEditor extends Phaser.Scene {
         this.load.spritesheet('dude', 'src/games/firstgame/assets/dude.png', { frameWidth: 32, frameHeight: 48 });
     }
     create () {
-        this.editor.create(this); 
+        this.editor.create(this);
         this.add.image(400, 300, 'sky');
 
         this.platforms = this.physics.add.staticGroup();
@@ -36,7 +36,7 @@ export class SceneEditor extends Phaser.Scene {
 
         this.movingPlatform = this.physics.add.image(400, 400, 'ground');
 
-        (<Phaser.Physics.Arcade.Body>this.movingPlatform.body).allowGravity = false;
+        (this.movingPlatform.body as Phaser.Physics.Arcade.Body).allowGravity = false;
         this.movingPlatform.setImmovable(true);
         this.movingPlatform.setVelocityX(50);
 
@@ -73,7 +73,7 @@ export class SceneEditor extends Phaser.Scene {
             setXY: { x: 12, y: 0, stepX: 70 }
         });
 
-        this.stars.children.iterate(function (child: Phaser.Types.Physics.Arcade.ImageWithDynamicBody) {
+        this.stars.children.iterate((child: Phaser.Types.Physics.Arcade.ImageWithDynamicBody) => {
 
             child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
 
@@ -87,7 +87,7 @@ export class SceneEditor extends Phaser.Scene {
         this.physics.add.overlap(this.player, this.stars, this.collectStar, null, this);
     }
     update () {
-        this.editor.update(this); 
+        this.editor.update(this);
         if (this.cursors.left.isDown)
         {
             this.player.setVelocityX(-160);

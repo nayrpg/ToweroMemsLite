@@ -10,12 +10,12 @@ export class SceneEditorPlugin extends Phaser.Plugins.BasePlugin {
 
     public constructor (pluginManager) {
         super(pluginManager);
-    }       
+    }
     /**
      * preload
      */
     public preload(scene: Phaser.Scene) {
-        
+        return;
     }
     /**
      * create
@@ -29,10 +29,9 @@ export class SceneEditorPlugin extends Phaser.Plugins.BasePlugin {
      * update
      */
     public update(scene: Phaser.Scene) {
-        
         SceneEditorToolBelt.handleToolUpdate(this);
 
-        let mouse = this.game.input.activePointer
+        const mouse = this.game.input.activePointer
         this.text.text = "x: " + mouse.x + " y: " + mouse.y
     }
 }
