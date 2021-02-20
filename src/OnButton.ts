@@ -1,6 +1,6 @@
 import 'phaser'
-import { SceneEditor } from './scene_editor/SceneEditor';
-import { SceneEditorPlugin } from './scene_editor/SceneEditorPlugin';
+import { MysticScene } from './scene_editor/MysticScene';
+import { MysticPlugin } from './scene_editor/MysticPlugin';
 
 export class OnButton {
     static workingScene: Phaser.Scene
@@ -20,10 +20,10 @@ export class OnButton {
                     },
             plugins: {
                 global: [
-                    { key: 'SceneEditorPlugin', plugin: SceneEditorPlugin, start: false, mapping: 'editor' }
+                    { key: 'MysticPlugin', plugin: MysticPlugin, start: false, mapping: 'editor' }
                 ]
             },
-            scene: SceneEditor
+            scene: MysticScene
         };
 
         OnButton.game = new Phaser.Game(config);

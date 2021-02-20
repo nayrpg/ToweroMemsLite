@@ -1,5 +1,5 @@
 import { RectangleTool } from "./tools/RectangleTool";
-import { SceneEditorPlugin } from "./SceneEditorPlugin";
+import { MysticPlugin } from "./MysticPlugin";
 import { SceneEditorTool, SceneEditorToolTypes } from "./SceneEditorTool";
 
 export class SceneEditorToolBelt {
@@ -17,14 +17,14 @@ export class SceneEditorToolBelt {
         }
         return SceneEditorToolBelt.tools[toolType];
     }
-    public static switchTool(editPlug: SceneEditorPlugin, newTool: SceneEditorToolTypes) {
+    public static switchTool(editPlug: MysticPlugin, newTool: SceneEditorToolTypes) {
         editPlug.tool = SceneEditorToolBelt.getTool(newTool);
         editPlug.tool.initDone = false;
     }
     /**
      * handleToolUpdate
      */
-    public static handleToolUpdate(editPlug: SceneEditorPlugin) {
+    public static handleToolUpdate(editPlug: MysticPlugin) {
         const tool = editPlug.tool
         if (tool) {
             if (!tool.initDone) {

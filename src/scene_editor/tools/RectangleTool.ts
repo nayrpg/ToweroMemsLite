@@ -1,7 +1,8 @@
 import 'phaser'
 import { Scene } from 'phaser';
+import { ColliderBox } from '../../components/ColliderBox';
 import { PositionUtils, OriginPosition} from '../../display/PositionUtils'
-import { SceneEditorPlugin } from '../SceneEditorPlugin'
+import { MysticPlugin } from '../MysticPlugin'
 import { SceneEditorTool, SceneEditorToolTypes } from '../SceneEditorTool'
 
 export class RectangleTool extends SceneEditorTool {
@@ -12,7 +13,7 @@ export class RectangleTool extends SceneEditorTool {
         this.type = SceneEditorToolTypes.Rectangle;
         this.drawing = false;
     }
-    init (editPlug: SceneEditorPlugin) {
+    init (editPlug: MysticPlugin) {
         const scene = editPlug.scene;
         scene.input.on('pointerdown', function (pointer) {
             scene.add.image(pointer.x, pointer.y, 'star', Phaser.Math.Between(0, 5));
@@ -29,11 +30,12 @@ export class RectangleTool extends SceneEditorTool {
             height = Math.abs(height);
             const topLeft = PositionUtils.positionOfTopLeft(drawPoint, width, height, OriginPosition.MidCenter)
             scene.add.rectangle(topLeft[0], topLeft[1], width, height,  0x005500);
+            editPlug.boxHandler.addColider(null, drawPoint, [width, height])
             this.drawing = false
         }, scene);
         super.init(editPlug);
     }
-    update(editPlug: SceneEditorPlugin) {
+    update(editPlug: MysticPlugin) {
         return;
     }
 }

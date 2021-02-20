@@ -1,4 +1,4 @@
-import { SceneEditorPlugin } from './SceneEditorPlugin';
+import { MysticPlugin } from './MysticPlugin';
 
 export enum SceneEditorToolTypes {
     Rectangle
@@ -9,10 +9,10 @@ export class SceneEditorTool {
     public constructor () {
         this.initDone = false;
     }
-    public init(editPlug: SceneEditorPlugin) {
+    public init(editPlug: MysticPlugin) {
         this.initDone = true;
     }
-    public update(editPlug: SceneEditorPlugin){
+    public update(editPlug: MysticPlugin){
         return;
     }
 }
