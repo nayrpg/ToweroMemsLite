@@ -4,8 +4,8 @@ export class ColliderBox extends ComponentHandler {
     constructor() {
         super();
     }
-    addColider(ent: number, pos: [number, number], dim: [number, number]) {
-        const collider = {position: pos, dimensions: dim};
+    addCollider(ent: number, pos: [number, number], dim: [number, number]) {
+        const collider = {entity: ent, position: pos, dimensions: dim};
         this.addComponent(ent, collider);
     }
     update() {

@@ -30,7 +30,7 @@ export class RectangleTool extends SceneEditorTool {
             height = Math.abs(height);
             const topLeft = PositionUtils.positionOfTopLeft(drawPoint, width, height, OriginPosition.MidCenter)
             scene.add.rectangle(topLeft[0], topLeft[1], width, height,  0x005500);
-            editPlug.boxHandler.addColider(null, drawPoint, [width, height])
+            editPlug.boxHandler.addCollider(null, drawPoint, [width, height])
             this.drawing = false
         }, scene);
         super.init(editPlug);
