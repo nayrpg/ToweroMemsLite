@@ -1,6 +1,8 @@
 import { Entity } from "./Entity";
 import { SparseSet } from "./SparseSet";
-export type Component = object;
+export interface Component{
+    entity: number
+}
 export abstract class ComponentHandler {
     private entities: SparseSet
     private components: Component[]
@@ -30,10 +32,10 @@ export abstract class ComponentHandler {
     addLoadedComponent(entity: number, component: Component) {
         if (entity === null) {
             entity = Entity.newEntity();
-            component["entity"] = entity;
+            component.entity = entity;
         }
-        console.log("Entity: " + entity);
-        console.log("Component: " + component);
+        // console.log("Entity: " + entity);
+        // console.log("Component: " + component);
 
         const index = this.entities.insert(entity, [this.components], [component]);
     }
@@ -41,7 +43,7 @@ export abstract class ComponentHandler {
     addComponent(entity: number, component: Component) {
         if (entity === null) {
             entity = Entity.newEntity();
-            component["entity"] = entity;
+            component.entity = entity;
         }
         // console.log("Entity: " + component["entity"]);
         // console.log("Component: " + component);
