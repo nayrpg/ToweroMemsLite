@@ -7,7 +7,7 @@ export class SparseSet {
         this.sparseLength = 0;
         this.dense = [];
     }
-    insert(item: number, partnerDenseArrays: any[][], insValues: any[]) {
+    insert(item: number, partnerDenseArrays: any[][] = [], insValues: any[] = []) {
         if (item < 0 || this.checkFor(item) > 0) {
             return;
         }
@@ -34,7 +34,7 @@ export class SparseSet {
             this.sparseLength = accessedItem + 1;
         }
     }
-    remove(removeItem: number, partnerDenseArrays: any[][]) {
+    remove(removeItem: number, partnerDenseArrays: any[][] = []) {
         if (this.checkFor(removeItem) < 0) {
             return
         }

@@ -1,7 +1,7 @@
 import { Entity } from "./Entity";
 import { SparseSet } from "./SparseSet";
 export interface Component{
-    entity: number
+    entity: Entity
 }
 export abstract class ComponentHandler {
     private entities: SparseSet
@@ -25,11 +25,11 @@ export abstract class ComponentHandler {
             this.update(component)
         }
     }
-    getComponent(entity: number) : Component {
-       const index = this.entities.checkFor(entity);
+    getComponent(entity: Entity) : Component {
+       const index = this.entities.checkFor(entity as number);
        return index < 0 ? null : this.components[index];
     }
-    addLoadedComponent(entity: number, component: Component) {
+    addLoadedComponent(entity: Entity = null, component: Component) : Entity {
         if (entity === null) {
             entity = Entity.newEntity();
             component.entity = entity;
@@ -37,10 +37,11 @@ export abstract class ComponentHandler {
         // console.log("Entity: " + entity);
         // console.log("Component: " + component);
 
-        const index = this.entities.insert(entity, [this.components], [component]);
+        const index = this.entities.insert(entity as number, [this.components], [component]);
+        return entity;
     }
 
-    addComponent(entity: number, component: Component) {
+    addComponent(entity: Entity = null, component: Component) : Entity {
         if (entity === null) {
             entity = Entity.newEntity();
             component.entity = entity;
@@ -48,9 +49,10 @@ export abstract class ComponentHandler {
         // console.log("Entity: " + component["entity"]);
         // console.log("Component: " + component);
 
-        const index = this.entities.insert(entity, [this.components], [component]);
+        const index = this.entities.insert(entity as number, [this.components], [component]);
         this.preload(component);
         this.create(component);
+        return entity;
     }
     abstract create(component: Component);
     abstract preload(component: Component);
