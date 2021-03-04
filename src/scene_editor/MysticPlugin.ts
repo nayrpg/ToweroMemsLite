@@ -1,32 +1,36 @@
 import 'phaser'
-import { ColliderBox } from '../components/ColliderBox';
+import { ColliderBoxHandler } from '../components/ColliderBox';
 import {SceneEditorTool, SceneEditorToolTypes, } from './SceneEditorTool';
 import { SceneEditorToolBelt } from './SceneEditorToolBelt'
 
 export class MysticPlugin extends Phaser.Plugins.BasePlugin {
+    static singleton: MysticPlugin 
     scene: Phaser.Scene;
     text: Phaser.GameObjects.Text;
     clickDownPos: [integer, integer];
     tool: SceneEditorTool;
-    boxHandler: ColliderBox;
+    boxHandler: ColliderBoxHandler;
 
     public constructor (pluginManager) {
         super(pluginManager);
-        this.boxHandler = new ColliderBox();
+        MysticPlugin.singleton = this;
     }
     /**
      * preload
      */
     public preload(scene: Phaser.Scene) {
+        this.scene = scene;
+        this.scene.physics.add.
+        this.boxHandler = new ColliderBoxHandler();
         return;
     }
     /**
      * create
      */
     public create(scene: Phaser.Scene) {
-        this.scene = scene;
         this.text = scene.add.text(250, 16, '', null);
         SceneEditorToolBelt.switchTool(this, SceneEditorToolTypes.Rectangle);
+        this.boxHandler._create();
     }
     /**
      * update

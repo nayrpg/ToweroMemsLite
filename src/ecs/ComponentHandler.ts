@@ -34,8 +34,8 @@ export abstract class ComponentHandler {
             entity = Entity.newEntity();
             component.entity = entity;
         }
-        // console.log("Entity: " + entity);
-        // console.log("Component: " + component);
+        console.log("Entity: ", entity);
+        console.log("Component: ", component);
 
         const index = this.entities.insert(entity as number, [this.components], [component]);
         return entity;
@@ -46,15 +46,25 @@ export abstract class ComponentHandler {
             entity = Entity.newEntity();
             component.entity = entity;
         }
-        // console.log("Entity: " + component["entity"]);
-        // console.log("Component: " + component);
+        console.log("Entity: ", entity);
+        console.log("Component: ", component);
 
-        const index = this.entities.insert(entity as number, [this.components], [component]);
+        this.entities.insert(entity as number, [this.components], [component]);
         this.preload(component);
         this.create(component);
         return entity;
     }
+
+    removeComponent(entity: Entity) {
+        if (entity === null) {
+            throw new Error("Entity value is null during component removal");
+        }
+        this.onRemove(this.getComponent(entity));
+        this.entities.remove(entity as number, [this.components]);
+    }
+
     abstract create(component: Component);
     abstract preload(component: Component);
     abstract update(component: Component);
+    abstract onRemove(component: Component);
 }

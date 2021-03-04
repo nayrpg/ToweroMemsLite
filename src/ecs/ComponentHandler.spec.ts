@@ -8,6 +8,7 @@ interface TestComponent extends Component{
     preloadFirst: boolean
 }
 class TestComponentHandler extends ComponentHandler {
+    onRemoveRun: boolean = false
     addTestComponent(ent: Entity = null) : Entity {
         const newComp: TestComponent = {
             entity: ent,
@@ -43,6 +44,11 @@ class TestComponentHandler extends ComponentHandler {
     update(comp: Component) {
         const testComp = comp as TestComponent
         testComp.updateRun = true;
+        return;
+    }
+    onRemove(comp: Component) {
+        const testComp = comp as TestComponent
+        this.onRemoveRun = true;
         return;
     }
 }
@@ -165,5 +171,25 @@ describe("The ComponentHandler parent type", () => {
         equal(testComp.createRun, true);
         equal(testComp.preloadFirst, true);
         equal(testComp.updateRun, false);
+    });
+    it("should be able to remove a component after adding it", () => {
+        const test = new TestComponentHandler();
+        const ent = Entity.newEntity();
+        test.addTestComponent(ent);
+        let component = test.getComponent(ent);
+        notEqual(component, null);
+        if (component === null) {
+            return;
+        }
+        const testComp: TestComponent = component as TestComponent;
+        equal(testComp.preloadRun, true);
+        equal(testComp.createRun, true);
+        equal(testComp.preloadFirst, true);
+        equal(testComp.updateRun, false);
+        test.onRemoveRun = false;
+        test.removeComponent(ent);
+        component = test.getComponent(ent)
+        equal(component, null);
+        equal(test.onRemoveRun, true);
     });
 })

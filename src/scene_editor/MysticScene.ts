@@ -7,14 +7,14 @@ export class MysticScene extends Phaser.Scene {
     platforms: Phaser.Physics.Arcade.StaticGroup;
     cursors: Phaser.Types.Input.Keyboard.CursorKeys;
     movingPlatform: Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
-    editor: MysticPlugin;
+    mystic: MysticPlugin;
     public constructor(sceneFileLocation: string, config: string | Phaser.Types.Scenes.SettingsConfig) {
         super(config);
     }
     // TODO: remove all scene creation and updating from this class and have the MysticPlugin do it
     preload () {
-        this.editor = this.plugins.get('MysticPlugin') as MysticPlugin;
-        this.editor.preload(this);
+        this.mystic = MysticPlugin.singleton;
+        this.mystic.preload(this);
         this.load.setBaseURL('http://labs.phaser.io');
         this.load.image('sky', 'src/games/firstgame/assets/sky.png');
         this.load.image('ground', 'src/games/firstgame/assets/platform.png');
@@ -22,7 +22,7 @@ export class MysticScene extends Phaser.Scene {
         this.load.spritesheet('dude', 'src/games/firstgame/assets/dude.png', { frameWidth: 32, frameHeight: 48 });
     }
     create () {
-        this.editor.create(this);
+        this.mystic.create(this);
         this.add.image(400, 300, 'sky');
 
         this.platforms = this.physics.add.staticGroup();
@@ -87,7 +87,7 @@ export class MysticScene extends Phaser.Scene {
         this.physics.add.overlap(this.player, this.stars, this.collectStar, null, this);
     }
     update () {
-        this.editor.update(this);
+        this.mystic.update(this);
         if (this.cursors.left.isDown)
         {
             this.player.setVelocityX(-160);
