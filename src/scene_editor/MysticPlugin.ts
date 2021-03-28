@@ -20,7 +20,6 @@ export class MysticPlugin extends Phaser.Plugins.BasePlugin {
      */
     public preload(scene: Phaser.Scene) {
         this.scene = scene;
-        this.scene.physics.add.
         this.boxHandler = new ColliderBoxHandler();
         return;
     }
